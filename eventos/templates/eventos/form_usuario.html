@@ -1,0 +1,23 @@
+{% extends "eventos/base.html" %}
+{% block title %}Crear Usuario{% endblock %}
+{% block content %}
+<div class="card" style="max-width:500px;margin:auto;">
+    <div class="card-header"><h4>Nuevo Usuario</h4></div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-3">
+                <label class="form-label fw-semibold">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
+            </div>
+            {% endfor %}
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="/eventos/usuarios/" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

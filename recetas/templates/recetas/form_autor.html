@@ -1,0 +1,23 @@
+﻿{% extends "recetas/base.html" %}
+{% block title %}Nuevo Autor{% endblock %}
+{% block content %}
+<div class="card" style="max-width:500px;margin:auto">
+  <div class="card-header"><h4>Nuevo Autor</h4></div>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="mb-3">
+        <label class="form-label fw-semibold">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
+      </div>
+      {% endfor %}
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a href="/recetas/autores/" class="btn btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

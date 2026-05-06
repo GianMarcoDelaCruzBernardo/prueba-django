@@ -1,0 +1,32 @@
+{% extends "eventos/base.html" %}
+{% block title %}Lista de Eventos{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-calendar3"></i> Eventos Disponibles</h2>
+    <a href="/eventos/evento/crear/" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Crear Evento</a>
+</div>
+{% if eventos %}
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+{% for evento in eventos %}
+<div class="col">
+    <div class="card h-100">
+        <div class="card-body">
+            <span class="badge bg-primary badge-categoria mb-2">{{ evento.get_categoria_display }}</span>
+            <h5 class="card-title">{{ evento.titulo }}</h5>
+            <p class="text-muted small"><i class="bi bi-geo-alt"></i> {{ evento.lugar }}</p>
+            <p class="text-muted small"><i class="bi bi-calendar"></i> {{ evento.fecha_inicio|date:"d/m/Y H:i" }}</p>
+            <p class="text-muted small"><i class="bi bi-person"></i> {{ evento.organizador }}</p>
+        </div>
+        <div class="card-footer bg-transparent d-flex gap-2">
+            <a href="/eventos/evento/{{ evento.pk }}/" class="btn btn-outline-primary btn-sm">Ver detalle</a>
+            <a href="/eventos/evento/{{ evento.pk }}/editar/" class="btn btn-outline-warning btn-sm">Editar</a>
+            <a href="/eventos/evento/{{ evento.pk }}/eliminar/" class="btn btn-outline-danger btn-sm">Eliminar</a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info"><i class="bi bi-info-circle"></i> No hay eventos registrados aun.</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "eventos/base.html" %}
+{% block title %}{{ evento.titulo }}{% endblock %}
+{% block content %}
+<div class="mb-3">
+    <a href="/eventos/" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i> Volver</a>
+</div>
+<div class="card mb-4">
+    <div class="card-body">
+        <span class="badge bg-primary mb-2">{{ evento.get_categoria_display }}</span>
+        <h2>{{ evento.titulo }}</h2>
+        <p>{{ evento.descripcion }}</p>
+        <div class="row text-muted small">
+            <div class="col-md-4"><i class="bi bi-geo-alt"></i> {{ evento.lugar }}</div>
+            <div class="col-md-4"><i class="bi bi-calendar"></i> {{ evento.fecha_inicio|date:"d/m/Y H:i" }} - {{ evento.fecha_fin|date:"d/m/Y H:i" }}</div>
+            <div class="col-md-4"><i class="bi bi-people"></i> Capacidad: {{ evento.capacidad_maxima }}</div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <strong><i class="bi bi-person-check"></i> Registrados: {{ total_registrados }}</strong>
+        <a href="/eventos/registro/crear/" class="btn btn-sm btn-success">+ Registrar usuario</a>
+    </div>
+    <div class="card-body">
+        {% if registros %}
+        <table class="table table-striped">
+            <thead><tr><th>Usuario</th><th>Correo</th><th>Estado</th><th>Accion</th></tr></thead>
+            <tbody>
+            {% for reg in registros %}
+            <tr>
+                <td>{{ reg.usuario.nombre }}</td>
+                <td>{{ reg.usuario.correo }}</td>
+                <td><span class="badge bg-success">{{ reg.estado }}</span></td>
+                <td><a href="/eventos/registro/{{ reg.pk }}/eliminar/" class="btn btn-sm btn-outline-danger">Cancelar</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">No hay usuarios registrados en este evento.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
